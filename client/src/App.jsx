@@ -4,26 +4,31 @@ import axios from 'axios'
 
 function App() {
   let [value, setValue] = useState();
-          //  console.log(value)
-
+   const [data,setData] = useState([])
+            
+              axios.get('http://localhost:5500/')
+              .then((a)=>setData(a.data))
           
-
-
-          
-                  axios.post('http://localhost:5500/home',{value})
-                 .then((a)=>console.log(a))
-
-        
-
+              const handle = ()=>{
+                axios.post('http://localhost:5500/home',{value})
+              }
   return (
     <>
-      <h1>hello</h1>
-    
-      <input
+     {
+      data.map((a)=>{
+        return(
+          <h1>{a.value}</h1>
+        )
+      })
+     }
+     <form onSubmit={handle}>
+     <input
         type="text"
         placeholder="enter your name"
         onChange={(e) => setValue(e.target.value)}
       />
+      <button>submit</button>
+     </form>
    
     </>
   );
